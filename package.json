@@ -1,0 +1,34 @@
+{
+  "name": "homebridge-eufy",
+  "version": "0.0.1",
+  "description": "eufy plugin for homebridge: https://homebridge.io/",
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "./node_modules/.bin/tsc"
+  },
+  "author": "Sebastian Moser <sebastian.moser@gmail.com>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sebmos/homebridge-eufy.git"
+  },
+  "bugs": {
+    "url": "http://github.com/sebmos/homebridge-eufy/issues"
+  },
+  "engines": {
+    "node": ">=4.0.0",
+    "homebridge": ">=0.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.18",
+    "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "node-eufy-api": "0.0.3"
+  }
+}
