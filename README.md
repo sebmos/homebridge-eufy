@@ -9,7 +9,7 @@ EufyHome (Anker) Plugin for [Homebridge](https://homebridge.io), based on [node-
 |T1202|[Smart Plug Mini](https://www.amazon.com/dp/B07177XC24?tag=sebmos-20)|Untested|
 |T1203|[Smart WiFi Plug (UK)](https://www.amazon.co.uk/gp/product/B07B8XDZ6L?tag=sebmos0d-21)||
 |T1211|[Smart Light Switch](https://www.amazon.com/dp/B071SJ977G?tag=sebmos-20)|Untested|
-|T1011|[Lumos Smart Bulb - White](https://www.amazon.co.uk/gp/product/B075J92B39?tag=sebmos0d-21)|Untested|
+|T1011|[Lumos Smart Bulb - White](https://www.amazon.co.uk/gp/product/B075J92B39?tag=sebmos0d-21)||
 |T1012|[Lumos Smart Bulb - Tunable White](https://www.amazon.com/dp/B07177X95T?tag=sebmos-20)|Untested|
 |T1013|[Lumos Smart Bulb - White & Color](https://www.amazon.com/dp/B072FS6YL7?tag=sebmos-20)|Untested|
 
@@ -34,8 +34,7 @@ Replace the dummy email address and password with your EufyHome/Anker account de
     "platform": "eufy",
     "name": "eufy",
     "email": "email@example.com",
-    "password": "s3cr3t",
-    "showPlugsAsSwitches": true // optional
+    "password": "s3cr3t"
 }]
 ```
 
