@@ -22,7 +22,7 @@ export class EufyHome {
         this.api = api;
 
         if (typeof config.email !== 'string' || typeof config.password !== 'string') {
-            throw new Error('No email/password available');
+            throw new Error('No valid Eufy account email/password provided');
         }
 
         this.eufyEmail = config.email;
@@ -105,7 +105,8 @@ export class EufyHome {
             .setCharacteristic(this.api.hap.Characteristic.SerialNumber, 'n/a');
 
         device.connect()
-            .catch(() => {
+            .catch(error => {
+                this.log('Error connecting to accessory:', error);
                 this.log('Removing accessory:', device.name);
 
                 this.api.unregisterPlatformAccessories(pluginName, platformName, [accessory]);
@@ -167,12 +168,18 @@ export class EufyHome {
             .on(CharacteristicEvent.SET, (value: boolean, callback: (error?: any) => void) => {
                 device.setPowerOn(value)
                     .then(() => callback())
-                    .catch(error => callback(error));
+                    .catch(error => {
+                        this.log('Error toggling power state on device:', device.name, ' - ', error);
+                        callback(error);
+                    });
             })
             .on(CharacteristicEvent.GET, (callback: (error?: any, value?: boolean) => void) => {
                 device.loadCurrentState()
                     .then(() => callback(null, device.isPowerOn()))
-                    .catch(error => callback(error));
+                    .catch(error => {
+                        this.log('Error loading power state on device:', device.name, ' - ', error);
+                        callback(error);
+                    });
             });
 
         if (device.supportsBrightness()) {
@@ -180,12 +187,18 @@ export class EufyHome {
                 .on(CharacteristicEvent.SET, (value: number, callback: (error?: any) => void) => {
                     device.setBrightness(value)
                         .then(() => callback())
-                        .catch(error => callback(error));
+                        .catch(error => {
+                            this.log('Error setting brightness on device:', device.name, ' - ', error);
+                            callback(error);
+                        });
                 })
                 .on(CharacteristicEvent.GET, (callback: (error?: any, value?: number) => void) => {
                     device.loadCurrentState()
                         .then(() => callback(null, device.getBrightness()))
-                        .catch(error => callback(error));
+                        .catch(error => {
+                            this.log('Error getting brightness on device:', device.name, ' - ', error);
+                            callback(error);
+                        });
                 });
         }
 
@@ -194,12 +207,18 @@ export class EufyHome {
                 .on(CharacteristicEvent.SET, (value: number, callback: (error?: any) => void) => {
                     device.setTemperature(value)
                         .then(() => callback())
-                        .catch(error => callback(error));
+                        .catch(error => {
+                            this.log('Error setting temperature on device:', device.name, ' - ', error);
+                            callback(error);
+                        });
                 })
                 .on(CharacteristicEvent.GET, (callback: (error: any, value?: number) => void) => {
                     device.loadCurrentState()
                         .then(() => callback(null, device.getTemperature()))
-                        .catch(error => callback(error));
+                        .catch(error => {
+                            this.log('Error getting temperature on device:', device.name, ' - ', error);
+                            callback(error);
+                        });
                 });
         }
 
@@ -209,12 +228,18 @@ export class EufyHome {
                     device.loadCurrentState()
                         .then(() => device.setHslColors(value, device.getHslColors().saturation, device.getHslColors().lightness))
                         .then(() => callback())
-                        .catch(error => callback(error));
+                        .catch(error => {
+                            this.log('Error setting color hue on device:', device.name, ' - ', error);
+                            callback(error);
+                        });
                 })
                 .on(CharacteristicEvent.GET, (callback: (error: any, value?: number) => void) => {
                     device.loadCurrentState()
                         .then(() => callback(null, device.getHslColors().hue))
-                        .catch(error => callback(error));
+                        .catch(error => {
+                            this.log('Error getting color hue on device:', device.name, ' - ', error);
+                            callback(error);
+                        });
                 });
 
             this.getOrAddCharacteristic(service, this.api.hap.Characteristic.Saturation)
@@ -222,12 +247,18 @@ export class EufyHome {
                     device.loadCurrentState()
                         .then(() => device.setHslColors(device.getHslColors().hue, value, device.getHslColors().lightness))
                         .then(() => callback())
-                        .catch(error => callback(error));
+                        .catch(error => {
+                            this.log('Error setting color saturation on device:', device.name, ' - ', error);
+                            callback(error);
+                        });
                 })
                 .on(CharacteristicEvent.GET, (callback: (error: any, value?: number) => void) => {
                     device.loadCurrentState()
                         .then(() => callback(null, device.getHslColors().saturation))
-                        .catch(error => callback(error));
+                        .catch(error => {
+                            this.log('Error getting color saturation on device:', device.name, ' - ', error);
+                            callback(error);
+                        });
                 });
         }
     }
