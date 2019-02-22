@@ -1,6 +1,6 @@
 {
   "name": "homebridge-eufy",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "eufy plugin for homebridge: https://homebridge.io/",
   "keywords": [
     "homebridge-plugin"
@@ -29,6 +29,6 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "node-eufy-api": "^0.0.5"
+    "node-eufy-api": "^0.1.0"
   }
 }
