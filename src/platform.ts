@@ -1,4 +1,4 @@
-import {loadDevices, createDevice, Device, DeviceEvent, DeviceType} from 'node-eufy-api';
+import { loadDevices, createDevice, Device, DeviceEvent, DeviceType } from 'node-eufy-api';
 import {
     pluginName, platformName,
     Logger, API, APIEvent,
