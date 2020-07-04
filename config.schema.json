@@ -1,0 +1,28 @@
+{
+  "pluginAlias": "Eufy",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "platform": {
+        "title": "Platform",
+        "type": "string",
+        "default": "eufy",
+        "required": true
+      },
+      "email": {
+        "title": "Email",
+        "type": "string",
+        "required": true,
+        "description": "Your Eufy Home email."
+      },
+      "password": {
+        "title": "Password",
+        "type": "string",
+        "required": true,
+        "description": "Your Eufy Home password."
+      }
+    }
+  }
+}
