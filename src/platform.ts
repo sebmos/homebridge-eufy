@@ -1,4 +1,5 @@
 import { loadDevices, createDevice, Device, DeviceEvent, DeviceType } from 'node-eufy-api';
+
 import {
     pluginName, platformName,
     Logger, API, APIEvent,
@@ -6,6 +7,20 @@ import {
     Service,
     Characteristic, CharacteristicEvent
 } from './interfaces';
+
+
+const mapRange = (
+    inputNumber: number,
+    input_start: number,
+    input_end: number,
+    output_start: number,
+    output_end: number
+): number => {
+  const input_range = input_end - input_start;
+  const output_range = output_end - output_start;
+
+  return (inputNumber - input_start) * output_range / input_range + output_start;
+};
 
 export class EufyHome {
     log: Logger;
@@ -205,7 +220,9 @@ export class EufyHome {
         if (device.supportsTemperature()) {
             this.getOrAddCharacteristic(service, this.api.hap.Characteristic.ColorTemperature)
                 .on(CharacteristicEvent.SET, (value: number, callback: (error?: any) => void) => {
-                    device.setTemperature(value)
+                    // scale from [140, 500] => [0, 100]
+                    const scaledColorTemperature = mapRange(value, 140, 500, 0, 100);
+                    device.setTemperature(scaledColorTemperature)
                         .then(() => callback())
                         .catch(error => {
                             this.log('Error setting temperature on device:', device.name, ' - ', error);
@@ -214,7 +231,11 @@ export class EufyHome {
                 })
                 .on(CharacteristicEvent.GET, (callback: (error: any, value?: number) => void) => {
                     device.loadCurrentState()
-                        .then(() => callback(null, device.getTemperature()))
+                        .then(() => {
+                            // scale from [0, 100] => [140, 500]
+                            const scaledColorTemperature = mapRange(device.getTemperature(), 0, 100, 140, 500);
+                            callback(null, scaledColorTemperature);
+                        })
                         .catch(error => {
                             this.log('Error getting temperature on device:', device.name, ' - ', error);
                             callback(error);
