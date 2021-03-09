@@ -220,7 +220,9 @@ export class EufyHome {
         if (device.supportsTemperature()) {
             this.getOrAddCharacteristic(service, this.api.hap.Characteristic.ColorTemperature)
                 .on(CharacteristicEvent.SET, (value: number, callback: (error?: any) => void) => {
-                    device.setTemperature(value)
+                    // scale from [140, 500] => [0, 100]
+                    const scaledColorTemperature = mapRange(value, 140, 500, 0, 100);
+                    device.setTemperature(scaledColorTemperature)
                         .then(() => callback())
                         .catch(error => {
                             this.log('Error setting temperature on device:', device.name, ' - ', error);
@@ -231,8 +233,8 @@ export class EufyHome {
                     device.loadCurrentState()
                         .then(() => {
                             // scale from [0, 100] => [140, 500]
-                            const scaledTemperature = mapRange(device.getTemperature(), 0, 100, 140, 500);
-                            callback(null, scaledTemperature);
+                            const scaledColorTemperature = mapRange(device.getTemperature(), 0, 100, 140, 500);
+                            callback(null, scaledColorTemperature);
                         })
                         .catch(error => {
                             this.log('Error getting temperature on device:', device.name, ' - ', error);
