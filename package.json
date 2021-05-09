@@ -29,6 +29,6 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "node-eufy-api": "^0.3.3"
+    "node-eufy-api": "^0.3.4"
   }
 }
