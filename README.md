@@ -2,6 +2,12 @@
 
 EufyHome (Anker) Plugin for [Homebridge](https://homebridge.io), based on [node-eufy-api](https://github.com/sebmos/node-eufy-api)
 
+## 🛑 Warning: Eufy firmware bug
+
+This package does not work reliable for all devices due to a firmware bug, which means the device will, when receiving a message via your local network, simply close the connection.
+
+There is no known workaround for this problem.
+
 ## Supported Devices
 |Device Code|Device Name|Comment|
 |--|--|--|
