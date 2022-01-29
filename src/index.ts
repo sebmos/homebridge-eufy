@@ -1,9 +1,10 @@
+import { API } from 'homebridge';
 import { setLogVerbosity, Verbosity } from 'node-eufy-api';
-import { API, pluginName, platformName } from './interfaces';
-import { EufyHome } from './platform';
+import { PLATFORM_NAME } from './settings';
+import { EufyHomePlatform } from './platform';
 
 setLogVerbosity(Verbosity.ERROR);
 
 export = (homebridge: API) => {
-    homebridge.registerPlatform(pluginName, platformName, EufyHome, true);
+    homebridge.registerPlatform(PLATFORM_NAME, EufyHomePlatform);
 };
